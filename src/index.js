@@ -17,8 +17,13 @@ class App extends Component {
             videos: [], 
             selectedVideo: null
         };
+
+        this.videoSearch('surfboards');
+    }
+    // Youtube search method takes a single term and is passed down to SearchBar component
+    videoSearch(term) {
         // Use Youtube api to searh for videos with a term of 'surfboards'
-        YTSearch({ key: API_KEY, term: 'surfboards' }, (videos) =>{
+        YTSearch({ key: API_KEY, term: term }, (videos) =>{
              this.setState({ 
                  videos: videos,
                  selectedVideo: videos[0]
@@ -28,7 +33,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <SearchBar />
+                <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
                 <VideoDetail video={this.state.selectedVideo} />
                 <VideoList 
                     onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
